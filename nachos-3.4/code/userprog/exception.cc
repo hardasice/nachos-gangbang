@@ -120,11 +120,24 @@ ExceptionHandler(ExceptionType which)
 			}
 			break;
 
+			case SC_Exec :
+			break;
+
+			case SC_Join :
+			break;
+
+			case SC_Exit : 
+			break;
+
+			case SC_Yield :
+			break;
+
 			default :
 			//Unprogrammed system calls end up here
 			break;
 		}         
 		break;
+
 
 	case ReadOnlyException :
 		puts ("ReadOnlyException");
