@@ -163,3 +163,114 @@ BitMap::WriteBack(OpenFile *file)
 {
    file->WriteAt((char *)map, numWords * sizeof(unsigned), 0);
 }
+
+
+
+//Function Added By Micah
+int BitMap::Contiguous(int position)
+{
+
+    int size = 0;
+    for(int i = position; i < numBits)
+    {
+        if(!Test(i)) size ++; //if the position is empty, increment size
+        else return size;
+
+    }
+
+}
+ 
+
+
+
+//Function Added By Micah
+int BitMap::Fit(int size, int type) //returns position of memory block
+{
+
+    //returns -1 if can't fit
+
+    //type: 1 = Best, 2 = First, 3 = Worst
+    int BestStart = -1; 
+    int BestSize = -1;
+
+    int WorstStart = -1; 
+    int WorstSize = -1; 
+
+    int FirstStart = -1;
+    int FirstSize = -1;
+    int OpenSpace = -1;
+    if(size == 0) return -1;
+
+    switch(type)
+    {
+
+        case 1 : //best fit
+        for(int i = 0; i < numBits; ++i)
+        {
+
+           OpenSpace  = Contiguous(i);
+           if( OpenSpace >= size)
+           {
+                if(BestStart == -1 )
+                {
+                    BestStart = i;
+                    BestSize = OpenSpace;
+                } 
+               else if (BestSize > OpenSpace)
+               {
+
+                    BestSize = OpenSpace;
+                    BestStart = i;
+               }
+           }
+           i += OpenSpace;
+
+        }
+        return BestStart;
+        break;
+        case 2 : //first fit
+        for(int i = 0; ++i)
+        {
+            OpenSpace  = Contiguous(i);
+            if(OpenSpace >= size)
+            {
+
+                FirstStart = i;
+                FirstSize = OpenSpace;
+                return FirstStart;
+            }
+
+
+
+        }
+        return FirstStart; //if you made it here, then no space was found. Return -1
+        break;
+        case 3 : //worst fit
+
+         for(int i = 0; i < numBits; ++i)
+        {
+
+           OpenSpace  = Contiguous(i);
+           if( OpenSpace >= size)
+           {
+                if(WorstStart == -1 )
+                {
+                    WorstStart = i;
+                    WorstSize = OpenSpace;
+                } 
+               else if (WorstSize < OpenSpace)
+               {
+
+                    WorstSize = OpenSpace;
+                    WorstStart = i;
+               }
+           }
+           i += OpenSpace;
+
+        }
+        return WorstStart;
+        break;
+    }
+   
+
+}

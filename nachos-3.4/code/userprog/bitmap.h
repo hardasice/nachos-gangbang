@@ -46,6 +46,10 @@ class BitMap {
     int NumClear();		// Return the number of clear bits
 
     void Print();		// Print contents of bitmap
+
+    int Contiguous(int position); //Micah -- returns how many empty spaces are next to each other, starting at position
+    int Fit(int size, int type); //Micah -- This allows us to find a block of open spaces that is capable of holding SIZE bits.
+
     
     // These aren't needed until FILESYS, when we will need to read and 
     // write the bitmap to a file
